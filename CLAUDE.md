@@ -115,6 +115,7 @@ public/          favicon, OG image, 404.html, robots.txt, images/
 
 ## Deployment
 
-Target: **Cloudflare Pages** (free). Build command `npm run build`, output directory `dist`, add the
-env var in the dashboard. `public/404.html` is used for unknown paths. Netlify works too (`netlify.toml`).
+Target: **Cloudflare Workers static assets** (free), configured by `wrangler.jsonc` (serves `dist/`).
+Deploy command `npm run build && npx wrangler deploy`; the Worker name must match `wrangler.jsonc`.
+Add `VITE_WEB3FORMS_ACCESS_KEY` as a build variable in the dashboard. `public/404.html` is used for unknown paths. Netlify works too (`netlify.toml`).
 See README for custom domain steps. Never buy a domain or create paid infrastructure.

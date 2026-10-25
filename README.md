@@ -50,19 +50,27 @@ Without a key, the form is hidden and a setup notice is shown. The form only rep
 Web3Forms confirms delivery. Web3Forms access keys are designed to be public in client code, but keep
 them out of Git anyway.
 
-## Deploy (Cloudflare Pages, free)
+## Deploy (Cloudflare Workers, free)
 
-1. Push this project to a GitHub repository.
-2. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git → pick the repo.
-3. Framework preset **Vite** · Build command `npm run build` · Output directory `dist`.
-4. Add `VITE_WEB3FORMS_ACCESS_KEY` under Settings → Environment variables, then deploy.
+The site is deployed as a Cloudflare Worker that only serves static files. `wrangler.jsonc` points
+it at the `dist/` build output and serves `public/404.html` for unknown paths.
+
+1. Cloudflare dashboard → Workers & Pages → Create → Import a repository → pick this repo.
+2. Project name: `abhay-portfolio` (must match `name` in `wrangler.jsonc`).
+3. Deploy command: `npm run build && npx wrangler deploy`
+   (if preview builds are enabled, preview command: `npm run build && npx wrangler versions upload`).
+4. Advanced settings → add the build variable `VITE_WEB3FORMS_ACCESS_KEY` with your key, then deploy.
+   The key is baked in at build time, so redeploy after changing it.
+5. Leave "Protect with Cloudflare Access" off, or visitors will be asked to log in.
+
+Every push to `main` redeploys automatically.
 
 **Netlify** also works out of the box — `netlify.toml` is included.
 
 ### Custom domain (later)
 
-Buy a domain from any registrar, then in Cloudflare Pages → your project → Custom domains → add it and
-follow the DNS instructions. After that, update `og:url` in `index.html`, make `og:image` an absolute
+Buy a domain from any registrar, then in Cloudflare → your Worker → Settings → Domains & Routes → add it
+and follow the DNS instructions. After that, update `og:url` in `index.html`, make `og:image` an absolute
 URL (`https://your-domain/og-image.png`), and update the Sitemap line in `public/robots.txt`.
 
 The social preview image is `public/og-image.png` (1200×630), rendered from `public/og-image.svg`.
