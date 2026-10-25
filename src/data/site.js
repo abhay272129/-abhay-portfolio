@@ -20,7 +20,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/abhay-gupta-ss/',
 
   // Profile photo in public/images/. Empty string shows the monogram fallback.
-  photo: '/images/profilePhoto.png',
+  photo: '/images/profile.webp',
   photoAlt: 'Portrait of Abhay Gupta',
 };
 

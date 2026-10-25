@@ -38,7 +38,7 @@ export const skillGroups = [
   {
     id: 'data',
     index: '03',
-    title: 'Databases & Messaging',
+    title: 'Databases',
     note: 'Relational, document and queue-based systems.',
     skills: [
       { name: 'MySQL', level: 'working' },

@@ -31,7 +31,7 @@ npm run preview   # check the production build locally
 | What | Where |
 |---|---|
 | Name, intro, email, GitHub, LinkedIn | `src/data/site.js` |
-| Profile photo | Put `profile.jpg` in `public/images/`, then set `photo: '/images/profile.jpg'` in `site.js` |
+| Profile photo | `public/images/profile.webp` (800px wide). To replace: add a new file in `public/images/` and update `photo` in `site.js` |
 | Projects | `src/data/projects.js` — empty URL hides its button; an empty list hides the whole section |
 | Project screenshots | Put files in `public/images/projects/` and set `image: '/images/projects/name.png'` |
 | Skills | `src/data/skills.js` — levels: `core`, `working`, `learning` |
