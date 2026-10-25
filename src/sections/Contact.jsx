@@ -5,19 +5,19 @@ import Reveal from '../components/Reveal.jsx';
 
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// Optional field: digits with an optional leading +, spaces, dashes, dots or brackets.
+// Digits with an optional leading +, spaces, dashes, dots or brackets.
 const phonePattern = /^\+?[\d\s().-]+$/;
 const emptyValues = { name: '', email: '', phone: '', message: '', botcheck: '' };
 
 function validate(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = 'Please enter your name.';
-  if (!emailPattern.test(values.email.trim())) errors.email = 'Please enter a valid email address.';
   const phone = values.phone.trim();
   const digits = phone.replace(/\D/g, '').length;
-  if (phone && (!phonePattern.test(phone) || digits < 7 || digits > 15)) {
-    errors.phone = 'Please enter a valid phone number, or leave it blank.';
-  }
+  if (!phone) errors.phone = 'Please enter your phone number.';
+  else if (!phonePattern.test(phone) || digits < 7 || digits > 15) errors.phone = 'Please enter a valid phone number.';
+  const email = values.email.trim();
+  if (email && !emailPattern.test(email)) errors.email = 'Please enter a valid email address, or leave it blank.';
   if (values.message.trim().length < 10) errors.message = 'Message should be at least 10 characters.';
   return errors;
 }
@@ -67,8 +67,9 @@ function ContactForm() {
           subject: `Portfolio message from ${values.name}`,
           from_name: 'Portfolio contact form',
           name: values.name,
-          email: values.email,
-          phone: values.phone.trim() || 'Not provided',
+          phone: values.phone.trim(),
+          // Optional; Web3Forms uses it as the reply-to address, so omit it rather than send ''.
+          ...(values.email.trim() && { email: values.email.trim() }),
           message: values.message,
         }),
       });
@@ -105,10 +106,9 @@ function ContactForm() {
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" checked={!!values.botcheck} onChange={(e) => setValues((v) => ({ ...v, botcheck: e.target.checked ? 'on' : '' }))} />
       <Field id="name" label="Name" autoComplete="name" value={values.name} onChange={onChange} error={errors.name} />
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="email" label="Email" type="email" autoComplete="email" value={values.email} onChange={onChange} error={errors.email} />
         <Field
           id="phone"
-          label="Phone (optional)"
+          label="Phone"
           type="tel"
           inputMode="tel"
           autoComplete="tel"
@@ -116,6 +116,7 @@ function ContactForm() {
           onChange={onChange}
           error={errors.phone}
         />
+        <Field id="email" label="Email (optional)" type="email" autoComplete="email" value={values.email} onChange={onChange} error={errors.email} />
       </div>
       <Field id="message" label="Message" as="textarea" rows={5} value={values.message} onChange={onChange} error={errors.message} />
 
