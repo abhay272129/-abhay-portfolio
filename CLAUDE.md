@@ -94,7 +94,6 @@ public/          favicon, OG image, 404.html, robots.txt, images/
 - `projects.js` is intentionally empty (college projects removed by the owner). Projects section, nav
   link and hero CTA are hidden until an entry is added. Candidate: Home Car Wash Service (internship /
   MCA project) — add only once the owner supplies its stack and features.
-- `og:url` and Sitemap URL — set after deployment
 - `VITE_WEB3FORMS_ACCESS_KEY` — empty → form hidden, setup notice shown
 
 ## Contact form contract
@@ -114,6 +113,9 @@ public/          favicon, OG image, 404.html, robots.txt, images/
 - [ ] No new heavy dependency added for decoration
 
 ## Deployment
+
+Live: https://abhay-gupta.abhaygupta82764.workers.dev — if the URL changes, update `index.html`
+(canonical, og:url, og:image), `public/robots.txt` and `public/sitemap.xml`.
 
 Target: **Cloudflare Workers static assets** (free), configured by `wrangler.jsonc` (serves `dist/`).
 Deploy command `npm run build && npx wrangler deploy`; the Worker name must match `wrangler.jsonc`.

@@ -1,6 +1,9 @@
 # Abhay Gupta — Portfolio
 
-Personal portfolio of Abhay Gupta, Software Engineer. Static single-page site built with
+Personal portfolio of Abhay Gupta, Software Engineer — live at
+https://abhay-gupta.abhaygupta82764.workers.dev
+
+Static single-page site built with
 React, Vite, Tailwind CSS v4 and Motion. No backend.
 
 ## Quick start
@@ -56,7 +59,7 @@ The site is deployed as a Cloudflare Worker that only serves static files. `wran
 it at the `dist/` build output and serves `public/404.html` for unknown paths.
 
 1. Cloudflare dashboard → Workers & Pages → Create → Import a repository → pick this repo.
-2. Project name: `abhay-portfolio` (must match `name` in `wrangler.jsonc`).
+2. Project name: `abhay-gupta` (must match `name` in `wrangler.jsonc`).
 3. Deploy command: `npm run build && npx wrangler deploy`
    (if preview builds are enabled, preview command: `npm run build && npx wrangler versions upload`).
 4. Advanced settings → add the build variable `VITE_WEB3FORMS_ACCESS_KEY` with your key, then deploy.
@@ -85,5 +88,4 @@ is indexable, but no metadata guarantees rankings. If SEO becomes a priority, co
 ## Remaining placeholders
 
 - Projects (section hidden until `projects.js` has an entry)
-- Production URL for `og:url`, absolute `og:image` URL, and sitemap
 - Web3Forms access key

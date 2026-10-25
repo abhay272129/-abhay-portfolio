@@ -2,8 +2,11 @@
 // The name must match the project name in the Cloudflare dashboard.
 // Deploy command in Cloudflare: npm run build && npx wrangler deploy
 {
-  "name": "abhay-portfolio",
+  "name": "abhay-gupta",
   "compatibility_date": "2026-10-01",
+  // keep the public *.workers.dev URL; no extra per-version preview URLs
+  "workers_dev": true,
+  "preview_urls": false,
   "assets": {
     "directory": "./dist",
     // unknown paths get public/404.html with a real 404 status
