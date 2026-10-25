@@ -5,11 +5,19 @@ import Reveal from '../components/Reveal.jsx';
 
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Optional field: digits with an optional leading +, spaces, dashes, dots or brackets.
+const phonePattern = /^\+?[\d\s().-]+$/;
+const emptyValues = { name: '', email: '', phone: '', message: '', botcheck: '' };
 
 function validate(values) {
   const errors = {};
   if (!values.name.trim()) errors.name = 'Please enter your name.';
   if (!emailPattern.test(values.email.trim())) errors.email = 'Please enter a valid email address.';
+  const phone = values.phone.trim();
+  const digits = phone.replace(/\D/g, '').length;
+  if (phone && (!phonePattern.test(phone) || digits < 7 || digits > 15)) {
+    errors.phone = 'Please enter a valid phone number, or leave it blank.';
+  }
   if (values.message.trim().length < 10) errors.message = 'Message should be at least 10 characters.';
   return errors;
 }
@@ -35,7 +43,7 @@ function Field({ id, label, error, as = 'input', ...props }) {
 }
 
 function ContactForm() {
-  const [values, setValues] = useState({ name: '', email: '', message: '', botcheck: '' });
+  const [values, setValues] = useState(emptyValues);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | success | error
   const [errorMsg, setErrorMsg] = useState('');
@@ -60,6 +68,7 @@ function ContactForm() {
           from_name: 'Portfolio contact form',
           name: values.name,
           email: values.email,
+          phone: values.phone.trim() || 'Not provided',
           message: values.message,
         }),
       });
@@ -67,7 +76,7 @@ function ContactForm() {
       // Only report success when the service confirms it.
       if (res.ok && data.success) {
         setStatus('success');
-        setValues({ name: '', email: '', message: '', botcheck: '' });
+        setValues(emptyValues);
       } else {
         setStatus('error');
         setErrorMsg(data.message || 'The message could not be sent. Please try again later.');
@@ -94,9 +103,19 @@ function ContactForm() {
   return (
     <form onSubmit={onSubmit} noValidate className="space-y-5">
       <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" checked={!!values.botcheck} onChange={(e) => setValues((v) => ({ ...v, botcheck: e.target.checked ? 'on' : '' }))} />
+      <Field id="name" label="Name" autoComplete="name" value={values.name} onChange={onChange} error={errors.name} />
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field id="name" label="Name" autoComplete="name" value={values.name} onChange={onChange} error={errors.name} />
         <Field id="email" label="Email" type="email" autoComplete="email" value={values.email} onChange={onChange} error={errors.email} />
+        <Field
+          id="phone"
+          label="Phone (optional)"
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          value={values.phone}
+          onChange={onChange}
+          error={errors.phone}
+        />
       </div>
       <Field id="message" label="Message" as="textarea" rows={5} value={values.message} onChange={onChange} error={errors.message} />
 
