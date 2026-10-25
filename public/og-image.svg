@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b0c0d"/>
+  <g stroke="#ffffff" stroke-opacity="0.06">
+    <path d="M0 105H1200M0 210H1200M0 315H1200M0 420H1200M0 525H1200"/>
+    <path d="M200 0V630M400 0V630M600 0V630M800 0V630M1000 0V630"/>
+  </g>
+  <text x="80" y="300" fill="#f2f2ee" font-family="Manrope, Arial, sans-serif" font-size="92" font-weight="800">Abhay Gupta</text>
+  <text x="84" y="370" fill="#9a9c98" font-family="Manrope, Arial, sans-serif" font-size="36">Software Engineer</text>
+  <circle cx="92" cy="450" r="8" fill="#c6f432"/>
+  <text x="112" y="460" fill="#c6f432" font-family="monospace" font-size="26">Engineering ideas into reliable software.</text>
+</svg>
